@@ -1,0 +1,8 @@
+typedef enum {
+  ALL_OK,
+  BUFFER_FULL,
+  BUFFER_IS_FULL,
+  BUFFER_IS_EMPTY,
+  BUFFER_EMPTY,
+  EMPTY_BUFFER_PROVIDED
+} RingBufferLogs;

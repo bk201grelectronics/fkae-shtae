@@ -1,0 +1,13 @@
+# Build output
+build/
+
+# Clang tooling
+compile_commands.json
+
+# macOS
+.DS_Store
+
+# Editor / temporary files
+*.swp
+*.swo
+*~

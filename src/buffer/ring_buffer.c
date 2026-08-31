@@ -1,0 +1,82 @@
+#include <string.h>
+
+#include "libfkae-shtae/buffer/constants.h"
+#include "libfkae-shtae/buffer/ring_buffer.h"
+
+static bool ringBufferIsEmpty(RingBuffer *this) { return this->count == 0; }
+
+static bool ringBufferIsFull(RingBuffer *this) {
+  return this->count == this->capacity;
+}
+
+static size_t ringBufferSize(RingBuffer *this) { return this->count; }
+
+static bool ringBufferPush(RingBuffer *this, const void *item) {
+
+  if (this == NULL || item == NULL) {
+    goto catch;
+  }
+
+  if (this->vtable->isFull(this)) {
+    goto catch;
+  }
+
+  unsigned char *destination =
+      (unsigned char *)this->data + (this->writeIndex * this->elementSize);
+
+  memcpy(destination, item, this->elementSize);
+  this->writeIndex = (this->writeIndex + 1) % this->capacity;
+
+  this->count++;
+  return true;
+
+catch:
+  return false;
+}
+
+static bool ringBufferPop(RingBuffer *this, void *item) {
+  if (this == NULL || item == NULL) {
+    goto catch;
+  }
+  if (this->vtable->isEmpty(this)) {
+    goto catch;
+  }
+  unsigned char *source =
+      (unsigned char *)this->data + (this->readIndex * this->elementSize);
+  memcpy(item, source, this->elementSize);
+  this->readIndex = (this->readIndex + 1) % this->capacity;
+  this->count--;
+  return true;
+catch:
+  return false;
+}
+
+static void ringBufferReset(RingBuffer *this) {
+  this->readIndex = 0;
+  this->writeIndex = 0;
+  this->count = 0;
+}
+
+static const RingBufferVTable ringBufferVTable = {
+    .push = ringBufferPush,
+    .pop = ringBufferPop,
+    .isEmpty = ringBufferIsEmpty,
+    .isFull = ringBufferIsFull,
+    .size = ringBufferSize,
+    .reset = ringBufferReset,
+};
+
+RingBuffer ringBufferCreate(void *storage, size_t capacity,
+                            size_t elementSize) {
+
+  RingBuffer buffer = {
+      .vtable = &ringBufferVTable,
+      .data = storage,
+      .capacity = capacity,
+      .elementSize = elementSize,
+      .readIndex = 0,
+      .writeIndex = 0,
+      .count = 0,
+  };
+  return buffer;
+}
