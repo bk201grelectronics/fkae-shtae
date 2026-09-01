@@ -1,26 +1,21 @@
 #include <string.h>
 
-#include "libfkae-shtae/buffer/buffer.h"
 #include "libfkae-shtae/buffer/constants.h"
 #include "libfkae-shtae/buffer/ring_buffer.h"
 
-static bool ringBufferIsEmpty(void *buffer) {
-  RingBuffer *this = (RingBuffer *)buffer;
-  return this->count == 0;
+static bool ringBufferIsEmpty(RingBuffer *this) { 
+    
+    return this->count == 0;
 }
 
-static bool ringBufferIsFull(void *buffer) {
-  RingBuffer *this = (RingBuffer *)buffer;
+static bool ringBufferIsFull(RingBuffer *this) {
   return this->count == this->capacity;
 }
 
-static size_t ringBufferSize(void *buffer) {
-  RingBuffer *this = (RingBuffer *)buffer;
-  return this->count;
-}
+static size_t ringBufferSize(RingBuffer *this) { return this->count; }
 
-static bool ringBufferPush(void *buffer, const void *item) {
-  RingBuffer *this = (RingBuffer *)buffer;
+static bool ringBufferPush(RingBuffer *this, const void *item) {
+
   if (this == NULL || item == NULL) {
     goto catch;
   }
@@ -42,8 +37,7 @@ catch:
   return false;
 }
 
-static bool ringBufferPop(void *buffer, void *item) {
-  RingBuffer *this = (RingBuffer *)buffer;
+static bool ringBufferPop(RingBuffer *this, void *item) {
   if (this == NULL || item == NULL) {
     goto catch;
   }
@@ -60,15 +54,13 @@ catch:
   return false;
 }
 
-static bool ringBufferReset(void *buffer) {
-  RingBuffer *this = (RingBuffer *)buffer;
+static void ringBufferReset(RingBuffer *this) {
   this->readIndex = 0;
   this->writeIndex = 0;
   this->count = 0;
-  return true;
 }
 
-static const BufferVTable ringBufferVTable = {
+static const RingBufferVTable ringBufferVTable = {
     .push = ringBufferPush,
     .pop = ringBufferPop,
     .isEmpty = ringBufferIsEmpty,

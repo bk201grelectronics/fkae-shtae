@@ -16,7 +16,7 @@ int main(void) {
 
   int output = 0;
   bool popped = buffer.vtable->pop(&buffer, &output);
-  assert(popped == false);
+  assert(popped == true);
   assert(output == 42);
   assert(buffer.vtable->size(&buffer) == 0);
   assert(buffer.vtable->isEmpty(&buffer));
