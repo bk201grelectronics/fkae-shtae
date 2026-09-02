@@ -1,11 +1,17 @@
 #pragma once
 
+#include "libfkae-shtae/container/container.h"
 #include <stddef.h>
-
-#include <libfkae-shtae/buffer/buffer.h>
 
 typedef struct Array Array;
 
 struct Array {
-  const BufferVTable *vtable;
-}
+  const struct ContainerVTable *vtable;
+  void *data;
+  
+  size_t capacity;
+  size_t elementSize;
+  size_t count;
+};
+
+Array arrayCreate(void *storage, size_t capacity, size_t elementSize);

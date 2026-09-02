@@ -10,11 +10,18 @@ LIB_DIR = $(PREFIX)/lib
 all:
 	mkdir -p build
 	$(CC) $(CFLAGS) -c src/buffer/ring_buffer.c -o build/ring_buffer.o
-	$(AR) rcs build/libfkae-shtae.a build/ring_buffer.o
+	$(CC) $(CFLAGS) -c src/byteBitMap/byteBitMap.c -o build/byteBitMap.o
+	$(AR) rcs build/libfkae-shtae.a build/ring_buffer.o build/byteBitMap.o
 
-test: all
+test: testRingBuffer testBitMap
+
+testRingBuffer: all
 	$(CC) $(CFLAGS) tests/ring_buffer_test.c build/libfkae-shtae.a -o build/ring_buffer_test
 	./build/ring_buffer_test
+
+testBitMap: all
+	$(CC) $(CFLAGS) tests/byteBitMapTest.c build/libfkae-shtae.a -o build/byte_bitmap_test
+	./build/byte_bitmap_test
 
 install: all
 	mkdir -p $(INCLUDE_DIR)/libfkae-shtae
@@ -29,4 +36,4 @@ uninstall:
 clean:
 	rm -rf build
 
-.PHONY: all test install uninstall clean
+.PHONY: all test testRingBuffer testBitMap install uninstall clean
