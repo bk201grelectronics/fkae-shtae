@@ -21,6 +21,10 @@ int main(void) {
   assert(buffer.vtable->size(&buffer) == 0);
   assert(buffer.vtable->isEmpty(&buffer));
 
+  RingBuffer dBuffer = ringBufferCreateDynamic(4, sizeof(int));
+  assert(dBuffer.data != NULL);
+  assert(dBuffer.vtable->destroy(&dBuffer) == true);
+
   printf("RingBuffer read/write test passed\n");
   return 0;
 }

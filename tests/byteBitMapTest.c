@@ -26,6 +26,8 @@ int main(void) {
   assert(bitMap.vtable->clear(&bitMap, 13) == true);
   assert(bitMap.vtable->isSet(&bitMap, 13) == false);
 
+  bitMap.vtable->destroy(&bitMap);
+
   printf("ByteBitMap set/get/clear test passed\n");
 
   return 0;

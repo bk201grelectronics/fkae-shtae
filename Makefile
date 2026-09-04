@@ -1,7 +1,7 @@
 CC = clang
 AR = ar
 
-CFLAGS = -Wall -Wextra -std=c11 -Iinclude
+CFLAGS = -g -Wall -Wextra -std=c11 -Iinclude
 
 PREFIX = /usr/local
 INCLUDE_DIR = $(PREFIX)/include

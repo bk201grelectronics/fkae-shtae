@@ -12,4 +12,5 @@ struct BufferVTable {
   bool (*isFull)(void *this);
   size_t (*size)(void *this);
   bool (*reset)(void *this);
+  bool (*destroy)(void *this);
 };

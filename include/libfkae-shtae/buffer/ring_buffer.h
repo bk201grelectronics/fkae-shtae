@@ -14,6 +14,8 @@ struct RingBuffer {
   size_t readIndex;
   size_t writeIndex;
   size_t count;
+  bool ownsTheData;
 };
 
 RingBuffer ringBufferCreate(void *storage, size_t capacity, size_t elementSize);
+RingBuffer ringBufferCreateDynamic(size_t capacity, size_t elementSize);
