@@ -11,9 +11,10 @@ all:
 	mkdir -p build
 	$(CC) $(CFLAGS) -c src/buffer/ring_buffer.c -o build/ring_buffer.o
 	$(CC) $(CFLAGS) -c src/byteBitMap/byteBitMap.c -o build/byteBitMap.o
-	$(AR) rcs build/libfkae-shtae.a build/ring_buffer.o build/byteBitMap.o
+	$(CC) $(CFLAGS) -c src/container/array.c -o build/array.o
+	$(AR) rcs build/libfkae-shtae.a build/ring_buffer.o build/byteBitMap.o build/array.o
 
-test: testRingBuffer testBitMap
+test: testRingBuffer testBitMap testArray
 
 testRingBuffer: all
 	$(CC) $(CFLAGS) tests/ring_buffer_test.c build/libfkae-shtae.a -o build/ring_buffer_test
@@ -22,6 +23,10 @@ testRingBuffer: all
 testBitMap: all
 	$(CC) $(CFLAGS) tests/byteBitMapTest.c build/libfkae-shtae.a -o build/byte_bitmap_test
 	./build/byte_bitmap_test
+
+testArray: all
+	$(CC) $(CFLAGS) tests/array_test.c build/libfkae-shtae.a -o build/array_test
+	./build/array_test
 
 install: all
 	mkdir -p $(INCLUDE_DIR)/libfkae-shtae
