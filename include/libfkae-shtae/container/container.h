@@ -12,4 +12,5 @@ struct ContainerVTable {
   size_t (*size)(void *this);
   size_t (*capacity)(void *this);
   void (*reset)(void *this);
+  void (*destroy)(void *this);
 };
