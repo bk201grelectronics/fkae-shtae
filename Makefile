@@ -12,9 +12,10 @@ all:
 	$(CC) $(CFLAGS) -c src/buffer/ring_buffer.c -o build/ring_buffer.o
 	$(CC) $(CFLAGS) -c src/byteBitMap/byteBitMap.c -o build/byteBitMap.o
 	$(CC) $(CFLAGS) -c src/container/array.c -o build/array.o
-	$(AR) rcs build/libfkae-shtae.a build/ring_buffer.o build/byteBitMap.o build/array.o
+	$(CC) $(CFLAGS) -c src/controller/controller.c -o build/controller.o
+	$(AR) rcs build/libfkae-shtae.a build/ring_buffer.o build/byteBitMap.o build/array.o build/controller.o
 
-test: testRingBuffer testBitMap testArray
+test: testRingBuffer testBitMap testArray testController
 
 testRingBuffer: all
 	$(CC) $(CFLAGS) tests/ring_buffer_test.c build/libfkae-shtae.a -o build/ring_buffer_test
@@ -30,6 +31,11 @@ testArray: all
 
 lint-markdown:
 	npm run lint:markdown
+
+
+testController: all
+	$(CC) $(CFLAGS) tests/controller_test.c build/libfkae-shtae.a -o build/controller_test
+	./build/controller_test
 
 install: all
 	mkdir -p $(INCLUDE_DIR)/libfkae-shtae
