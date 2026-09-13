@@ -1,0 +1,14 @@
+{
+  "name": "libfkae-shtae-docs",
+  "private": true,
+  "scripts": {
+    "lint:markdown": "markdownlint-cli2 \"**/*.md\" \"#node_modules\"",
+    "lint:markdown:fix": "markdownlint-cli2 --fix \"**/*.md\" \"#node_modules\""
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "0.23.2"
+  },
+  "overrides": {
+    "smol-toml": "1.8.0"
+  }
+}

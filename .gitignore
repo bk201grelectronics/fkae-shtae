@@ -1,6 +1,9 @@
 # Build output
 build/
 
+# Node.js documentation tooling
+node_modules/
+
 # Clang tooling
 compile_commands.json
 

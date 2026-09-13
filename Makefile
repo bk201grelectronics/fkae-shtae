@@ -28,6 +28,9 @@ testArray: all
 	$(CC) $(CFLAGS) tests/array_test.c build/libfkae-shtae.a -o build/array_test
 	./build/array_test
 
+lint-markdown:
+	npm run lint:markdown
+
 install: all
 	mkdir -p $(INCLUDE_DIR)/libfkae-shtae
 	mkdir -p $(LIB_DIR)
@@ -41,4 +44,4 @@ uninstall:
 clean:
 	rm -rf build
 
-.PHONY: all test testRingBuffer testBitMap install uninstall clean
+.PHONY: all test testRingBuffer testBitMap testArray lint-markdown install uninstall clean
